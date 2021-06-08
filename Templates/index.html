@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    <body>
+        <div id="board">
+            <div id="pots-table">
+
+            </div>
+
+            <div id="musik">
+
+            </div>
+
+            <div id="card-table">
+
+            </div>
+
+            <div id="my-hand">
+
+            </div>
+        </div>
+        <div id="sidebar">
+            <div id="username">
+
+            </div>
+            <div id="score-table">
+                <h3>Tabela wyników</h3>
+                <div class="score-table-row">
+
+                </div>
+            </div>
+            <div id="chat">
+
+            </div>
+            <div id="messages">
+                <div>
+                    <form id="sendMessage">
+                        <input id="message" type="text"><button>Wyślij</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<p>Musik:</p>-->
+        <!--{% for card in musik %}-->
+            <!--<img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>-->
+        <!--{% end %}-->
+        <!--<p>Reszta kart:</p>-->
+        <!--{% for card in cards %}-->
+            <!--<img src="{{ card.display() }}" alt="Zdjęcie karty {{ card.display() }}" width="100px"/>-->
+        <!--{% end %}-->
+        <script src="../static/js/MessageHandler.js"></script>
+        <script>
+        let username = prompt("What's your name?");
+        let message_handler = new MessageHandler();
+        message_handler.connect();
+
+        if (username){
+            let usernameBox = document.getElementById("username");
+            usernameBox.innerHTML = "USERNAME: " + username;
+            message_handler.sendMessage({"type": "join_game", "user": username})
+        }
+
+        document.getElementById("sendMessage").addEventListener('submit', function (evt) {
+            evt.preventDefault();
+            let messageInput = document.getElementById("message");
+            let message = messageInput.value;
+            messageInput.value = "";
+            message_handler.sendMessage({"type": "update_chat", "user": username, "message": message})
+        });
+
+        </script>
+    </body>
+</html>
